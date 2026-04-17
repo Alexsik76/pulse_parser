@@ -13,36 +13,60 @@ body {
     margin-bottom: 20px;
 }
 
+.input-group {
+    margin-bottom: 20px;
+}
+
 .trigger {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    margin: 10px 0;
-    background: #fafafa;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    margin: 8px 0;
+    background: #fff;
     cursor: pointer;
+    transition: all 0.2s ease;
+    color: #333;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.trigger:hover {
+    border-color: #007bff;
+    background: #f0f7ff;
 }
 
 .label {
     font-size: 14px;
     color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
 }
 
-button {
+button#save-btn {
     background: #007bff;
     color: #fff;
     border: none;
-    padding: 15px 30px;
+    padding: 18px 30px;
     font-size: 18px;
-    border-radius: 8px;
+    border-radius: 12px;
     width: 100%;
     cursor: pointer;
     font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+    transition: transform 0.1s, background 0.2s;
 }
 
-button:disabled {
+button#save-btn:active {
+    transform: scale(0.98);
+}
+
+button#save-btn:disabled {
     background: #ccc;
+    box-shadow: none;
 }
 
 #status {
@@ -54,7 +78,6 @@ button:disabled {
 
 /* Контейнер модального вікна */
 #info-modal {
-    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -121,6 +144,11 @@ button:disabled {
     align-items: center;
     justify-content: center;
     transition: color 0.2s;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: none;
 }
 
 #info-btn:hover {
@@ -129,12 +157,82 @@ button:disabled {
 
 .modal-content h2 {
     margin-top: 0;
+    margin-bottom: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+#schema-selector {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.placeholder-text {
+    text-align: center;
+    color: #666;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Added styles for dynamic content */
+.period-section h3 {
+    border-bottom: 2px solid #eee;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    color: #007bff;
+    text-align: left;
+}
+
+.medicine-entry {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.medicine-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #333;
+}
+
+.medicine-other {
+    font-size: 0.9em;
+    color: #666;
+    font-style: italic;
+    margin-bottom: 5px;
+}
+
+.variants-list {
+    margin: 5px 0 0 20px;
+    padding: 0;
+    list-style-type: disc;
+}
+
+.variant-item {
+    font-size: 0.95em;
+    color: #444;
+    margin-bottom: 3px;
+}
+
+/* Accessibility and UI improvements */
 #close-modal {
+    background: transparent;
+    border: none;
+    padding: 5px;
     cursor: pointer;
     color: #999;
     display: flex;
