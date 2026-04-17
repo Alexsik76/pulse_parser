@@ -16,29 +16,23 @@
 
 <div id="info-modal">
     <div class="modal-content">
-        <h2>
+        <h2 style="margin-bottom: 10px;">
             Схема прийому
             <span id="close-modal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </span>
         </h2>
+        
+        <select id="schema-selector" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px; font-size: 16px;">
+            <option value="">Loading schemas...</option>
+        </select>
+
         <hr>
         
-        <p><strong>☀️ Ранок:</strong></p>
-        <ul>
-            <li><strong>Вальсакор 80 мг</strong>:
-                <ul>
-                    <li>130-140 → 1/2 таб.</li>
-                    <li>> 140 → 1 таб.</li>
-                </ul>
-            </li>
-        </ul>
-        
-        <p><strong>🌙 Вечір:</strong></p>
-        <ul>
-            <li><strong>Аторіс 20 мг</strong> → 1 таб.</li>
-            <li><strong>Магнікор 75 мг</strong> → 1 таб.</li>
-        </ul>
+        <div id="schema-content">
+            <!-- Dynamic content will be loaded here -->
+            <p style="text-align: center; color: #666;">Select a schema to see details</p>
+        </div>
     </div>
 </div>
     <div class="card">
