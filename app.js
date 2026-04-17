@@ -1,16 +1,18 @@
 const APP_CONFIG = {
     SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxpfGFWwk742MysJntyqIxVjiNowgRGt0-TE-Kcy5w0lexPPfzJ_imSB_TzYWrdXlD1sA/exec",
+    
     RANGES: {
         sys: Array.from({length: 151}, (_, i) => i + 70),  
         dia: Array.from({length: 101}, (_, i) => i + 40),   
         pulse: Array.from({length: 121}, (_, i) => i + 40)  
     }
 };
-
 class BPTracker {
     constructor() {
         this.data = this.loadCache();
+        this.chart = null;
         this.initUI();
+        this.loadHistory(); // Load data on startup
         this.registerServiceWorker();
     }
 
@@ -38,7 +40,6 @@ class BPTracker {
 
     createPicker(selector, dataArr, defaultVal, key) {
         document.querySelector(selector).innerText = defaultVal;
-        
         new MobileSelect({
             trigger: selector,
             wheels: [{ data: dataArr }],
@@ -47,34 +48,86 @@ class BPTracker {
             position: [dataArr.indexOf(Number(defaultVal)) >= 0 ? dataArr.indexOf(Number(defaultVal)) : 0],
             callback: (indexArr, data) => {
                 this.data[key] = data[0];
+                this.saveCache();
+            }
+        });
+    }
+
+    async loadHistory() {
+        try {
+            const response = await fetch(APP_CONFIG.SCRIPT_URL);
+            const history = await response.json();
+            this.renderChart(history);
+        } catch (error) {
+            console.error("Failed to load history:", error);
+        }
+    }
+
+    renderChart(history) {
+        const ctx = document.getElementById('bpChart').getContext('2d');
+        
+        // Prepare data: filter pulse, focus on SYS/DIA
+        const labels = history.map(entry => new Date(entry.date).toLocaleDateString());
+        const sysData = history.map(entry => entry.sys);
+        const diaData = history.map(entry => entry.dia);
+
+        if (this.chart) {
+            this.chart.destroy(); // Prevent overlapping
+        }
+
+        this.chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'SYS',
+                        data: sysData,
+                        borderColor: '#ff4757',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        tension: 0.3
+                    },
+                    {
+                        label: 'DIA',
+                        data: diaData,
+                        borderColor: '#2f3542',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { min: 40, max: 200 }
+                },
+                plugins: {
+                    legend: { position: 'top' }
+                }
             }
         });
     }
 
     async sendData() {
         const btn = document.getElementById('save-btn');
-        const status = document.getElementById('status');
-        
         btn.disabled = true;
-        btn.innerText = "Saving...";
         
-        this.saveCache();
-
         try {
             await fetch(APP_CONFIG.SCRIPT_URL, {
                 method: "POST",
-                mode: "no-cors", 
-                headers: { "Content-Type": "text/plain" }, 
+                mode: "no-cors",
                 body: JSON.stringify(this.data)
             });
-
-            status.style.display = "block";
-            setTimeout(() => status.style.display = "none", 3000);
+            
+            // Refresh chart after saving
+            setTimeout(() => this.loadHistory(), 1000); 
+            alert("Saved!");
         } catch (error) {
             alert("Error saving data.");
         } finally {
             btn.disabled = false;
-            btn.innerText = "Save to Sheets";
         }
     }
 
