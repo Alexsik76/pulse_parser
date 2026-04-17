@@ -42,6 +42,8 @@ class BPTracker {
         new MobileSelect({
             trigger: selector,
             wheels: [{ data: dataArr }],
+            cancelBtnText: 'Cancel',
+            ensureBtnText: 'OK',
             position: [dataArr.indexOf(Number(defaultVal)) >= 0 ? dataArr.indexOf(Number(defaultVal)) : 0],
             callback: (indexArr, data) => {
                 this.data[key] = data[0];
