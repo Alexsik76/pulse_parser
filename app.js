@@ -140,7 +140,7 @@ class BPTracker {
     setActiveSchema(schemaID) {
         const container = document.getElementById('schema-content');
         if (!schemaID) {
-            container.innerHTML = '<p style="text-align: center; color: #666;">Choose a schema to view details</p>';
+            container.innerHTML = '<p class="placeholder-text">Choose a schema to view details</p>';
             return;
         }
         
@@ -154,43 +154,38 @@ class BPTracker {
         
         const periods = Object.keys(grouped);
         if (periods.length === 0) {
-            container.innerHTML = '<p style="text-align: center; padding: 20px;">No data found for this schema.</p>';
+            container.innerHTML = '<p class="placeholder-text">No data found for this schema.</p>';
             return;
         }
 
         periods.forEach(period => {
             const periodSection = document.createElement('div');
             periodSection.className = 'period-section';
-            periodSection.innerHTML = `<h3 style="border-bottom: 2px solid #eee; padding-bottom: 5px; margin-top: 20px; color: #007bff; text-align: left;">${period}</h3>`;
+            periodSection.innerHTML = `<h3>${period}</h3>`;
             
             const meds = Object.keys(grouped[period]);
             meds.forEach(medName => {
                 const medData = grouped[period][medName];
                 const medDiv = document.createElement('div');
-                medDiv.style.marginBottom = '15px';
-                medDiv.style.textAlign = 'left';
+                medDiv.className = 'medicine-entry';
 
                 // Medicine header
-                let headerHtml = `<div style="font-weight: bold; font-size: 1.1em; color: #333;">${medName}</div>`;
+                let headerHtml = `<div class="medicine-name">${medName}</div>`;
                 
                 // General description (Other)
                 if (medData.other) {
-                    headerHtml += `<div style="font-size: 0.9em; color: #666; font-style: italic; margin-bottom: 5px;">${medData.other}</div>`;
+                    headerHtml += `<div class="medicine-other">${medData.other}</div>`;
                 }
                 
                 medDiv.innerHTML = headerHtml;
 
                 // Variants list (Conditions & Amount)
                 const variantsList = document.createElement('ul');
-                variantsList.style.margin = '5px 0 0 20px';
-                variantsList.style.padding = '0';
-                variantsList.style.listStyleType = 'disc';
+                variantsList.className = 'variants-list';
 
                 medData.variants.forEach(variant => {
                     const li = document.createElement('li');
-                    li.style.fontSize = '0.95em';
-                    li.style.color = '#444';
-                    li.style.marginBottom = '3px';
+                    li.className = 'variant-item';
 
                     let variantText = '';
                     if (variant.conditions) {

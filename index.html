@@ -4,53 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BP Tracker</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/color/48/hearts.png">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mobile-select@1.4.0/dist/style/mobile-select.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="info-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-    </div>
+    <header>
+        <button id="info-btn" aria-label="Show Treatment Schema">
+            <svg width="24" height="24"><use href="icons.svg#icon-info"></use></svg>
+        </button>
+    </header>
 
-<div id="info-modal">
-    <div class="modal-content">
-        <h2 style="margin-bottom: 10px;">
-            Схема прийому
-            <span id="close-modal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </span>
-        </h2>
-        
-        <select id="schema-selector" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 15px; font-size: 16px;">
-            <option value="">Loading schemas...</option>
-        </select>
+    <main>
+        <div id="info-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <div class="modal-content">
+                <h2 id="modal-title">
+                    Схема прийому
+                    <button id="close-modal" aria-label="Close">
+                        <svg width="24" height="24"><use href="icons.svg#icon-close"></use></svg>
+                    </button>
+                </h2>
+                
+                <label for="schema-selector" class="visually-hidden">Select Schema</label>
+                <select id="schema-selector">
+                    <option value="">Loading schemas...</option>
+                </select>
 
-        <hr>
-        
-        <div id="schema-content">
-            <!-- Dynamic content will be loaded here -->
-            <p style="text-align: center; color: #666;">Select a schema to see details</p>
+                <hr>
+                
+                <div id="schema-content">
+                    <p class="placeholder-text">Select a schema to see details</p>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-    <div class="card">
-        <div class="label">SYS (mmHg)</div>
-        <div id="sys-trigger" class="trigger">120</div>
+
+        <section class="card" aria-labelledby="tracker-title">
+            <h1 id="tracker-title" class="visually-hidden">Blood Pressure Tracker</h1>
+            
+            <div class="input-group">
+                <label for="sys-trigger" class="label">SYS (mmHg)</label>
+                <button id="sys-trigger" class="trigger">120</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="dia-trigger" class="label">DIA (mmHg) </label>
+                <button id="dia-trigger" class="trigger">80</button>
+            </div>
+            
+            <div class="input-group">
+                <label for="pulse-trigger" class="label">PULSE (bpm)</label>
+                <button id="pulse-trigger" class="trigger">70</button>
+            </div>
+        </section>
         
-        <div class="label">DIA (mmHg)</div>
-        <div id="dia-trigger" class="trigger">80</div>
-        
-        <div class="label">PULSE (bpm)</div>
-        <div id="pulse-trigger" class="trigger">70</div>
-    </div>
-    
-    <button id="save-btn">Save to Sheets</button>
-    <div class="card">
-        <canvas id="bpChart"></canvas>
-    </div>
-    <div id="status">Saved successfully!</div>
+        <button id="save-btn">Save to Sheets</button>
+
+        <section class="card" aria-labelledby="chart-title">
+            <h2 id="chart-title" class="label">History Chart</h2>
+            <canvas id="bpChart"></canvas>
+        </section>
+
+        <div id="status" role="status" aria-live="polite">Saved successfully!</div>
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/mobile-select@1.4.0/dist/mobile-select.iife.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
