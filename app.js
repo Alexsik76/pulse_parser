@@ -2,9 +2,9 @@ const APP_CONFIG = {
     SCRIPT_URL: "https://script.google.com/macros/s/AKfycbxpfGFWwk742MysJntyqIxVjiNowgRGt0-TE-Kcy5w0lexPPfzJ_imSB_TzYWrdXlD1sA/exec",
     
     RANGES: {
-        sys: Array.from({length: 151}, (_, i) => i + 70),  
+        sys: Array.from({length: 200}, (_, i) => i + 70),  
         dia: Array.from({length: 101}, (_, i) => i + 40),   
-        pulse: Array.from({length: 121}, (_, i) => i + 40)  
+        pulse: Array.from({length: 200}, (_, i) => i + 40)  
     }
 };
 
@@ -291,6 +291,17 @@ class BPTracker {
         });
     }
 
+    showStatus(message, isError = false) {
+        const statusEl = document.getElementById('status');
+        statusEl.textContent = message;
+        statusEl.style.color = isError ? '#dc3545' : 'green';
+        statusEl.style.display = 'block';
+        
+        setTimeout(() => {
+            statusEl.style.display = 'none';
+        }, 3000);
+    }
+
     async sendData() {
         const btn = document.getElementById('save-btn');
         btn.disabled = true;
@@ -303,9 +314,9 @@ class BPTracker {
             });
             
             setTimeout(() => this.loadHistory(), 1000); 
-            alert("Saved!");
+            this.showStatus("Saved successfully!");
         } catch (error) {
-            alert("Error saving data.");
+            this.showStatus("Error saving data.", true);
         } finally {
             btn.disabled = false;
         }
