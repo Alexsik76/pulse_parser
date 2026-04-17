@@ -34,10 +34,22 @@ class BPTracker {
         this.createPicker('#sys-trigger', APP_CONFIG.RANGES.sys, this.data.sys, 'sys');
         this.createPicker('#dia-trigger', APP_CONFIG.RANGES.dia, this.data.dia, 'dia');
         this.createPicker('#pulse-trigger', APP_CONFIG.RANGES.pulse, this.data.pulse, 'pulse');
-
+        document.getElementById('info-btn').onclick = () => this.toggleModal(true);
+        document.getElementById('close-modal').onclick = () => this.toggleModal(false);
+        window.onclick = (event) => {
+            if (event.target == document.getElementById('info-modal')) this.toggleModal(false);
+            };
         document.getElementById('save-btn').addEventListener('click', () => this.sendData());
     }
 
+    toggleModal(show) {
+    const modal = document.getElementById('info-modal');
+    if (show) {
+        modal.classList.add('active');
+    } else {
+        modal.classList.remove('active');
+    }
+}
     createPicker(selector, dataArr, defaultVal, key) {
         document.querySelector(selector).innerText = defaultVal;
         new MobileSelect({

@@ -3,6 +3,7 @@ const ASSETS = [
     './',
     './index.html',
     './app.js',
+    './style.css',
     './manifest.json',
     'https://cdn.jsdelivr.net/npm/mobile-select@1.4.0/dist/style/mobile-select.css',
     'https://cdn.jsdelivr.net/npm/mobile-select@1.4.0/dist/mobile-select.iife.min.js'

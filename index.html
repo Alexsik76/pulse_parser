@@ -7,17 +7,40 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mobile-select@1.4.0/dist/style/mobile-select.css">
-    <style>
-        body { font-family: system-ui, sans-serif; padding: 20px; background: #f4f4f9; text-align: center; }
-        .card { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .trigger { font-size: 24px; font-weight: bold; padding: 15px; border: 1px solid #ddd; border-radius: 8px; margin: 10px 0; background: #fafafa; cursor: pointer; }
-        .label { font-size: 14px; color: #666; }
-        button { background: #007bff; color: #fff; border: none; padding: 15px 30px; font-size: 18px; border-radius: 8px; width: 100%; cursor: pointer; font-weight: bold; }
-        button:disabled { background: #ccc; }
-        #status { margin-top: 15px; color: green; font-weight: bold; display: none; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id="info-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+    </div>
+
+<div id="info-modal">
+    <div class="modal-content">
+        <h2>
+            Схема прийому
+            <span id="close-modal">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </span>
+        </h2>
+        <hr>
+        
+        <p><strong>☀️ Ранок:</strong></p>
+        <ul>
+            <li><strong>Вальсакор 80 мг</strong>:
+                <ul>
+                    <li>130-140 → 1/2 таб.</li>
+                    <li>> 140 → 1 таб.</li>
+                </ul>
+            </li>
+        </ul>
+        
+        <p><strong>🌙 Вечір:</strong></p>
+        <ul>
+            <li><strong>Аторіс 20 мг</strong> → 1 таб.</li>
+            <li><strong>Магнікор 75 мг</strong> → 1 таб.</li>
+        </ul>
+    </div>
+</div>
     <div class="card">
         <div class="label">SYS (mmHg)</div>
         <div id="sys-trigger" class="trigger">120</div>
